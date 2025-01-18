@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
     searchInput.addEventListener('input', filterRows);
     eligibilityFilter.addEventListener('change', filterRows);
 
-    // Search functionality
     searchInput.addEventListener('input', function (e) {
         const searchTerm = e.target.value.toLowerCase();
         const rows = document.querySelectorAll('tbody tr');
@@ -34,17 +33,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Category filter functionality
     filterButtons.forEach((button) => {
         button.addEventListener('click', function () {
+            filterButtons.forEach((btn) => btn.classList.remove('active'));
+            this.classList.add('active');
             const category = this.dataset.category;
             const tables = document.querySelectorAll('table');
 
             tables.forEach((table) => {
+                const header = table.previousElementSibling;
                 if (category === 'all' || table.id.includes(category)) {
                     table.style.display = '';
+                    header.style.display = '';
                 } else {
                     table.style.display = 'none';
+                    header.style.display = 'none';
                 }
             });
         });
